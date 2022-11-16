@@ -8,4 +8,9 @@ const GlobalStyle = createGlobalStyle`
 }
 `
 
+/*
+    font-family: 'Raleway', sans-serif;
+    font-family: 'Saira Stencil One', cursive;
+*/
+
 export default GlobalStyle
