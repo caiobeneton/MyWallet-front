@@ -78,6 +78,9 @@ const StyledOptions = styled.div`
     justify-content: space-around;
     margin: 10px auto;
     padding: 0 20px;
+    a:link, a:visited, a:hover, a:active {
+        text-decoration: none;
+    }
 `;
 
 const StyledButton = styled.div`
