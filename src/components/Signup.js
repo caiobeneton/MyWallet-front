@@ -1,12 +1,41 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from "axios"
 
 export default function Signup() {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
     const [nome, setNome] = useState("")
     const [confirma, setConfirma] = useState("")
+    const navigate = useNavigate()
+
+    function submit(){
+
+        if(senha !== confirma) {
+            alert("As senhas precisam ser iguais!")
+            return
+        }
+
+        const user = {
+            name: nome,
+            email,
+            password: senha
+        }
+
+        const URL = "http://localhost:5000/signUp"
+
+        const promise = axios.post(URL, user)
+        promise.then(resposta => {
+            console.log(resposta.data)
+            navigate('/')
+        })
+
+        promise.catch(err => {
+            console.log(err.response.data)
+            alert('Preencha os campos corretamente!')
+        })
+    }
 
     return (
         <StyledContainer>
@@ -21,7 +50,7 @@ export default function Signup() {
                     <input type='text' placeholder="senha" value={senha} onChange={e => setSenha(e.target.value)}></input>
                     <input type='text' placeholder="confirme a senha" value={confirma} onChange={e => setConfirma(e.target.value)}></input>
 
-                    <button>Cadastrar</button>
+                    <button type='submit' onClick={submit}>Cadastrar</button>
                 </Form>
 
                 <Link to={`/`}>

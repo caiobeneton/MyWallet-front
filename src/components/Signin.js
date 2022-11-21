@@ -1,11 +1,31 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from "axios"
 
 export default function Signin(){
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
+    const navigate = useNavigate()
 
+    function submit(){
+        const URL = "http://localhost:5000/signIn"
+
+        const user = {
+            email,
+            password: senha
+        }
+
+        const promise = axios.post(URL, user)
+        promise.then(resposta => {
+            navigate('/hoje')
+        })
+
+        promise.catch(err => {
+            console.log(err.response.data)
+            alert('Preencha os campos corretamente!')
+        })
+    }
     return (
         <StyledContainer>
             <StyledWrapper>
@@ -15,7 +35,7 @@ export default function Signin(){
                 <Form>
                     <input type='text' placeholder="email" value={email} onChange={e => setEmail(e.target.value)}></input>
                     <input type='text' placeholder="senha" value={senha} onChange={e => setSenha(e.target.value)}></input>
-                    <button>Entrar</button>
+                    <button type='submit' onClick={submit}>Entrar</button>
                 </Form>
 
                 <Link to={`/signup`}>
